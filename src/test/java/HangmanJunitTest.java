@@ -4,30 +4,28 @@ import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import java.util.List;
+import java.util.ArrayList;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 public class HangmanJunitTest {
 
     private HangmanController hangmanController;
-    private Hangman hangmanGame;
-
     @BeforeEach
     public void setUpBeforeEach() {
-        hangmanGame = new Hangman();
+        new Hangman();
         hangmanController = new HangmanController();
     }
 
     @Test
     public void testWordsListNotNull() {
-        List<String> wordsList = hangmanController.getWords();
+        ArrayList<String> wordsList = hangmanController.getWords();
         assertNotNull(wordsList);
     }
 
     @Test
     public void testWordsListNotEmpty() {
-        List<String> wordsList = hangmanController.getWords();
+        ArrayList<String> wordsList = hangmanController.getWords();
         assertFalse(wordsList.isEmpty());
     }
 
@@ -45,4 +43,5 @@ public class HangmanJunitTest {
         String word = hangmanController.getRandomWord();
         assertNotNull(word);
         assertTrue(word.length() == 5);
+    }
 }
