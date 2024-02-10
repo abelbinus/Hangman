@@ -45,4 +45,19 @@ public class HangmanJunitTest {
         String word = hangmanController.getRandomWord();
         assertNotNull(word);
         assertTrue(word.length() == 5);
+    }
+
+    @Test
+    public void testIncorrectFilePath() {
+        HangmanController controller = new HangmanController();
+        List<String> words = controller.readWordList("nonexistent_file.txt");
+        assertTrue(words.isEmpty());
+    }
+
+    @Test
+    public void testFileNotAccessible() {
+        HangmanController controller = new HangmanController();
+        List<String> words = controller.readWordList("wordlist.txt"); // Assuming file exists but not accessible
+        assertTrue(words.isEmpty());
+    }
 }
