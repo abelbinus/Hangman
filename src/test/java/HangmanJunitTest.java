@@ -1,6 +1,9 @@
 import stacs.*;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -12,16 +15,34 @@ public class HangmanJunitTest {
 
     @BeforeEach
     public void setUpBeforeEach() {
-        hangmanGame = new Hangman(); // Remove Hangman declaration here
-        hangmanGame.fetchAllWords();
-        hangmanController = new HangmanController(hangmanGame.getWords());
+        hangmanGame = new Hangman();
+        hangmanController = new HangmanController();
     }
 
     @Test
-    public void testFetchAllWords() {
-        List<String> wordsList = hangmanGame.getWords();
+    public void testWordsListNotNull() {
+        List<String> wordsList = hangmanController.getWords();
         assertNotNull(wordsList);
-        assertFalse(wordsList.isEmpty());
-        // Add more specific tests if needed, such as checking the content of wordsList
     }
+
+    @Test
+    public void testWordsListNotEmpty() {
+        List<String> wordsList = hangmanController.getWords();
+        assertFalse(wordsList.isEmpty());
+    }
+
+    @Test
+    public void testRandomWordSelection() {
+        String word1 = hangmanController.getRandomWord();
+        String word2 = hangmanController.getRandomWord();
+        assertNotNull(word1);
+        assertNotNull(word2);
+        assertNotEquals(word1, word2);
+    }
+
+    @Test
+    public void testWordLength() {
+        String word = hangmanController.getRandomWord();
+        assertNotNull(word);
+        assertTrue(word.length() == 5);
 }

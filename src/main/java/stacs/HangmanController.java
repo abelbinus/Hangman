@@ -1,6 +1,19 @@
 package stacs;
 import java.util.*;
 public class HangmanController {
-    public HangmanController(List<String> wordsList) {
+
+    private List<String> wordsList;
+    public HangmanController() {
+    }
+
+    public List<String> getWords() {
+        // TODO Auto-generated method stub
+        return(wordsList);
+    }
+
+    public String getRandomWord() {
+        // TODO Auto-generated method stub
+        String word = "";
+        return(word);
     }
 }
