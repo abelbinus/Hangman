@@ -10,24 +10,26 @@ public class HangmanController {
     private ArrayList<String> wordsList;
 
     public void startGame() {
-        wordsList = getWords();
+        String fileName = "src\\main\\resources\\wordlist.txt";
+        wordsList = getWords(fileName);
         String word = getRandomWord();
         System.out.println("Random word: " + word);
     }
 
-    public ArrayList<String> getWords() {
+    public ArrayList<String> getWords(String fileName) {
 
         // TODO Auto-generated method stub
         @SuppressWarnings({ "unchecked", "rawtypes" })
         ArrayList<String> words = new ArrayList();
         try {
-            words = (ArrayList<String>) Files.readAllLines(Paths.get("src\\main\\resources\\wordlist.txt"));
+            words = (ArrayList<String>) Files.readAllLines(Paths.get(fileName));
         } catch (IOException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
         return(words);
     }
+
 
     public String getRandomWord() {
         // TODO Auto-generated method stub
