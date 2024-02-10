@@ -31,6 +31,7 @@ public class HangmanJunitTest {
 
     @Test
     public void testRandomWordSelection() {
+        hangmanController.startGame();
         String word1 = hangmanController.getRandomWord();
         String word2 = hangmanController.getRandomWord();
         assertNotNull(word1);
@@ -40,6 +41,7 @@ public class HangmanJunitTest {
 
     @Test
     public void testWordLength() {
+        hangmanController.startGame();
         String word = hangmanController.getRandomWord();
         assertNotNull(word);
         assertTrue(word.length() == 5);
