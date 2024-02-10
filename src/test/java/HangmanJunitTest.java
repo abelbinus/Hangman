@@ -19,13 +19,13 @@ public class HangmanJunitTest {
 
     @Test
     public void testWordsListNotNull() {
-        ArrayList<String> wordsList = hangmanController.getWords();
+        ArrayList<String> wordsList = hangmanController.getWords("src\\test\\resources\\wordlist-test.txt");
         assertNotNull(wordsList);
     }
 
     @Test
     public void testWordsListNotEmpty() {
-        ArrayList<String> wordsList = hangmanController.getWords();
+        ArrayList<String> wordsList = hangmanController.getWords("src\\test\\resources\\wordlist-test.txt");
         assertFalse(wordsList.isEmpty());
     }
 
