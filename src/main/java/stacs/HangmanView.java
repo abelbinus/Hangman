@@ -42,11 +42,11 @@ public class HangmanView {
         }
 
         else if (updateDisplayIndex == 2) {
-            hangmanDisplay.set(3, "    /|\\  |");
+            hangmanDisplay.set(3, "    /|\\   |");
         }
 
         else if (updateDisplayIndex == 1) {
-            hangmanDisplay.set(4, "    /      |");
+            hangmanDisplay.set(4, "    /     |");
         }
 
         else if (updateDisplayIndex == 0) {
