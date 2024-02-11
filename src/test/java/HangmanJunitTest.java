@@ -1,13 +1,16 @@
-import stacs.*;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.ArrayList;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import stacs.Hangman;
+import stacs.HangmanController;
+import stacs.HangmanView;
 
 public class HangmanJunitTest {
 
@@ -28,14 +31,30 @@ public class HangmanJunitTest {
 
     @Test
     public void testWordsListNotEmpty() {
-        ArrayList<String> wordsList = hangmanController.getWords("src\\test\\resources\\wordlist-test.txt");
+        ArrayList<String> wordsList;
+        String osName = System.getProperty("os.name").toLowerCase();
+        if (osName.contains("win")) {
+            // Windows
+            wordsList = hangmanController.getWords("src\\test\\resources\\wordlist-test.txt");
+        } else {
+            // Assume Linux or Unix-like
+            wordsList = hangmanController.getWords("src/test/resources/wordlist-test.txt");
+        }
         assertFalse(wordsList.isEmpty());
     }
 
     @Test
     public void testWordLength() {
         hangmanController.setObject(hangmanView);
-        ArrayList<String> wordsList = hangmanController.getWords("src\\test\\resources\\wordlist-test.txt");
+        String osName = System.getProperty("os.name").toLowerCase();
+        ArrayList<String> wordsList;
+        if (osName.contains("win")) {
+            // Windows
+            wordsList = hangmanController.getWords("src\\test\\resources\\wordlist-test.txt");
+        } else {
+            // Assume Linux or Unix-like
+            wordsList = hangmanController.getWords("src/test/resources/wordlist-test.txt");
+        }
         String word = hangmanController.getRandomWord(wordsList);
         assertNotNull(word);
         assertTrue(word.length() == 5);
