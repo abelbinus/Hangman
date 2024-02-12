@@ -12,24 +12,37 @@ import stacs.Hangman;
 import stacs.HangmanController;
 import stacs.HangmanView;
 
+/**
+ * Test class for HangmanController.
+ */
 public class HangmanJunitTest {
 
     private HangmanController hangmanController;
     private HangmanView hangmanView;
+    /**
+     * Sets up objects before each test method.
+     */
     @BeforeEach
     public void setUpBeforeEach() {
+        // Instantiating a new Hangman object
         //noinspection InstantiationOfUtilityClass
         new Hangman();
         hangmanController = new HangmanController();
         hangmanView = new HangmanView();
     }
 
+    /**
+     * Tests if the words list is not null.
+     */
     @Test
     public void testWordsListNotNull() {
         ArrayList<String> wordsList = hangmanController.getWords("src\\test\\resources\\wordlist-test.txt");
         assertNotNull(wordsList);
     }
 
+    /**
+     * Tests if the words list is not empty.
+     */
     @Test
     public void testWordsListNotEmpty() {
         ArrayList<String> wordsList;
@@ -45,6 +58,9 @@ public class HangmanJunitTest {
         assertFalse(wordsList.isEmpty());
     }
 
+    /**
+     * Tests the length of a randomly selected word.
+     */
     @Test
     public void testWordLength() {
         hangmanController.setObject(hangmanView);
@@ -63,6 +79,9 @@ public class HangmanJunitTest {
         assertEquals(5, word.length());
     }
 
+    /**
+     * Tests getting the initial hidden word.
+     */
     @Test
     public void testGetHiddenWordInitial() {
         // Arrange
@@ -76,6 +95,9 @@ public class HangmanJunitTest {
         assertEquals(5, hiddenWord.length());
     }
 
+    /**
+     * Tests getting the hidden word after setting.
+     */
     @Test
     public void testGetHiddenWordAfterSetting() {
         // Arrange
@@ -91,6 +113,9 @@ public class HangmanJunitTest {
         assertEquals(expectedHiddenWord, hiddenWord);
     }
 
+    /**
+     * Tests the game end condition (win).
+     */
     @Test
     public void testGameEndWin() {
         // Arrange
@@ -106,6 +131,9 @@ public class HangmanJunitTest {
         assertEquals("\nYou won! :)", hangmanController.getUserMessage()); // Verify user message
     }
 
+    /**
+     * Tests the game end condition (loss).
+     */
     @Test
     public void testGameEndLoss() {
         // Arrange
@@ -121,6 +149,9 @@ public class HangmanJunitTest {
         assertEquals("\nYou lose!", hangmanController.getUserMessage()); // Verify user message
     }
 
+    /**
+     * Tests the game not ending condition.
+     */
     @Test
     public void testGameNotEnd() {
         // Arrange
@@ -136,6 +167,9 @@ public class HangmanJunitTest {
         assertTrue(hangmanController.getUserMessage().isEmpty()); // User message should be null
     }
 
+    /**
+     * Tests getting the player's score.
+     */
     @Test
     public void testGetPlayerScore() {
         // Arrange

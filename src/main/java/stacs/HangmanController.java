@@ -27,16 +27,48 @@ public class HangmanController {
      */
     private final int SIX = 6;
 
+    /**
+     * List to keep track of incorrectly guessed letters.
+     */
     private final ArrayList<Character> wrongList = new ArrayList<>();
+
+    /**
+     * List to keep track of correctly guessed letters.
+     */
     private final ArrayList<Character> correctList = new ArrayList<>();
 
+    /**
+     * Instance of HangmanView to manage the game's display.
+     */
     private HangmanView hangmanView;
+
+    /**
+     * Message for the user.
+     */
     private String userMessage = "";
+
+    /**
+     * The hidden word with underscores representing unknown letters.
+     */
     private String hiddenWord = "_____";
+
+    /**
+     * Message from the system. Correct or Incorrect Choice
+     */
     private String systemMessage = "";
+
+    /**
+     * The player's score.
+     */
     private int playerScore = SIX;
+
+     /**
+     * Sets up the game by selecting a random word and initializing variables.
+     */
     public void setGame() {
+        // Setup hangman display
         hangmanView.setHangmanDisplay();
+        // Determine the operating system
         String osName = System.getProperty("os.name").toLowerCase();
         ArrayList<String> wordsList;
         if (osName.contains("win")) {
@@ -46,7 +78,9 @@ public class HangmanController {
             // Linux or Unix-like
             wordsList = getWords("src/main/resources/wordlist.txt");
         }
+         // Select a random word from the lists
         correctWord = getRandomWord(wordsList);
+         // Initialize user life, lists, hidden word, and messages
         setUserLife(SIX);
         if (!wrongList.isEmpty()) {
             wrongList.clear();
@@ -60,6 +94,9 @@ public class HangmanController {
         systemMessage = "";
     }
 
+    /**
+     * Starts the Hangman game.
+     */
     public void startGame() {
         hangmanView.displayHangman();
         if(!systemMessage.isEmpty()) {
@@ -79,9 +116,9 @@ public class HangmanController {
         } 
         else {
             // Display the result of the game. If count is greater than or equal to 0 and the hidden word,
-            // no longer contains any underscores the player has won the game.
             hangmanView.displayHangman();
             System.out.println(getUserMessage() + "\n");
+            // Prompt the user to play again
             System.out.println("Your score is " + getPlayerScore() + "\n");
 
             Scanner scanner = new Scanner(System.in);
@@ -92,13 +129,13 @@ public class HangmanController {
             do
             {
                 if (input.equalsIgnoreCase("y") || input.equalsIgnoreCase("yes")) {
-                    //if Yes, set the game again and start it.
+                    // if Yes, set the game again and start it.
                     setGame();
                     startGame();
                     counterInput= 4;
                 }
                 else if (input.equalsIgnoreCase("n") || input.equalsIgnoreCase("no")){
-                    //if No, exit the game.
+                    // if No, exit the game.
                     System.out.println("\n\nThank you for playing Hangman!!!\nHave a nice day : )");
                     counterInput= 4;
                 }
@@ -111,26 +148,50 @@ public class HangmanController {
         }
     }
 
+     /**
+     * Retrieves the player's score.
+     * @return The player's score.
+     */
     public int getPlayerScore() {
         return playerScore;
     }
 
+    /**
+     * Retrieves the user message.
+     * @return The user message.
+     */
     public String getUserMessage() {
         return userMessage;
     }
 
+     /**
+     * Sets the user message.
+     * @param userMessage The message to set.
+     */
     public void setUserMessage(String userMessage) {
         this.userMessage = userMessage;
     }
 
+    /**
+     * Sets the hidden word.
+     * @param hiddenWord The hidden word.
+     */
     public void setHiddenWord (String hiddenWord) {
         this.hiddenWord = hiddenWord;
     }
 
+    /**
+     * Retrieves the hidden word.
+     * @return The hidden word.
+     */
     public String getHiddenWord () {
         return hiddenWord;
     }
 
+    /**
+     * Checks if the game has ended.
+     * @return True if the game has ended, false otherwise.
+     */
     public boolean gameEnd() {
             if (userLife > 0 && !Arrays.stream(hiddenWord.split("")).toList().contains("_")) {
                 System.out.println();
@@ -147,12 +208,16 @@ public class HangmanController {
         return false;
     }
 
+    /**
+     * Checks if the user input is valid.
+     * @param userInput The user input.
+     */
     private void checkValidInput(String userInput) {
-        //check if the userinput is valid or not
+        // check if the userinput is valid or not
         if (userInput.length() == 1 && Character.isLetter(userInput.charAt(0))) {
-            //single character check successful.
+            // single character check successful.
             char userInputChar = Character.toLowerCase(userInput.charAt(0));
-            //check if character has been used before.
+            // check if character has been used before.
             for (char ch : wrongList) {
                 if (ch == userInputChar) {
                     System.out.println("You have already entered the character before.\nPLease try again.");
@@ -177,12 +242,12 @@ public class HangmanController {
                     }
                 }
                 systemMessage = "\nCorrect Choice!!!";
-                //increase player score and add to used list.
+                // increase player score and add to used list.
                 playerScore += 3;
                 correctList.add(userInputChar);
             }
             else {
-                //decrease player score and add to used list.
+                // decrease player score and add to used list.
                 systemMessage = "\nIncorrect Choice!!!";
                 decreaseUserLife();
                 playerScore--;
@@ -195,14 +260,26 @@ public class HangmanController {
         }
     }
 
+    /**
+     * Decreases the user's life.
+     */
     private void decreaseUserLife() {
         userLife--;
     }
 
+    /**
+     * Sets the user's life.
+     * @param userLife The user's life.
+     */
     public void setUserLife(int userLife) {
         this.userLife = userLife;
     }
 
+    /**
+     * Reads words from a file.
+     * @param fileName The name of the file.
+     * @return The list of words.
+     */
     public ArrayList<String> getWords(String fileName) {
         @SuppressWarnings({ "unchecked", "rawtypes" })
         ArrayList<String> words = new ArrayList();
@@ -213,13 +290,21 @@ public class HangmanController {
         return(words);
     }
 
-
+    /**
+     * Retrieves a random word from a list.
+     * @param wordsList The list of words.
+     * @return A random word.
+     */
     public String getRandomWord(ArrayList<String> wordsList) {
         Random random = new Random();
         int randomIndex = random.nextInt(wordsList.size());
         return wordsList.get(randomIndex);
     }
 
+    /**
+     * Sets the HangmanView object.
+     * @param hangmanView The HangmanView object.
+     */
     public void setObject(HangmanView hangmanView) {
         this.hangmanView = hangmanView;
     }
