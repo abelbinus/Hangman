@@ -20,11 +20,14 @@ public class HangmanView {
         setHangmanDisplay();
     }
     public void setHangmanDisplay() {
+        if(!hangmanDisplay.isEmpty()) {
+            hangmanDisplay.clear();
+        }
         for (String s : hangmanDisplayContent) {
             hangmanDisplay.add(s);
         }
     }
-    public void displayHangman () {
+    public void displayHangman() {
         for (String s : hangmanDisplay) {
             System.out.println(s);
         }
@@ -52,7 +55,7 @@ public class HangmanView {
         else if (updateDisplayIndex == 0) {
             hangmanDisplay.set(4, "    / \\   |");
         }
-        displayHangman();
+        //displayHangman();
     }
 
     public String userInput(String hiddenWord) {
@@ -73,9 +76,13 @@ public class HangmanView {
         System.out.println();
         System.out.println("You have " + userLife + " chances left");
     }
-    public void displayWrongLetters(ArrayList<Character> wrongList){
+    public void displayWrongLetters(ArrayList<Character> wrongList) {
         // Display the wrong letters entered by the user.
         System.out.println();
-        System.out.println("Wrong letters: " + wrongList.toString());
+        System.out.print("Wrong letters: ");
+        for (char c : wrongList) {
+            System.out.print(c + " ");
+        }
+        System.out.println();
     }
 }

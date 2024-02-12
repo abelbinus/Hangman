@@ -18,6 +18,7 @@ public class HangmanJunitTest {
     private HangmanView hangmanView;
     @BeforeEach
     public void setUpBeforeEach() {
+        //noinspection InstantiationOfUtilityClass
         new Hangman();
         hangmanController = new HangmanController();
         hangmanView = new HangmanView();
@@ -59,7 +60,7 @@ public class HangmanJunitTest {
         }
         String word = hangmanController.getRandomWord(wordsList);
         assertNotNull(word);
-        assertTrue(word.length() == 5);
+        assertEquals(5, word.length());
     }
 
     @Test

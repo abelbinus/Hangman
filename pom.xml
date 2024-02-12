@@ -23,6 +23,7 @@
     </dependencies>
     <build>
         <plugins>
+            <!-- Configuration for exec-maven-plugin -->
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>exec-maven-plugin</artifactId>
@@ -38,8 +39,16 @@
                     </execution>
                 </executions>
             </plugin>
+            
+            <!-- Configuration for maven-javadoc-plugin -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>3.3.0</version>
+                <configuration>
+                    <show>private</show>
+                </configuration>
+            </plugin>
         </plugins>
     </build>
-
-
 </project>
