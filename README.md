@@ -29,4 +29,4 @@ To compile/run the Hangman game using Maven, you can use the following commands:
 * Execute the Application Directly: `mvn exec:java`
 * Run Tests: `mvn test`
 * Package the Application: `mvn package`
-* Clean Build: `mvn compile`
+* Clean Build: `mvn clean install`
