@@ -36,7 +36,7 @@ public class HangmanJunitTest {
      */
     @Test
     public void testWordsListNotNull() {
-        ArrayList<String> wordsList = hangmanController.getWords("src\\test\\resources\\wordlist-test.txt");
+        ArrayList<String> wordsList = hangmanController.getWords("wordlist-test.txt");
         assertNotNull(wordsList);
     }
 
@@ -45,16 +45,7 @@ public class HangmanJunitTest {
      */
     @Test
     public void testWordsListNotEmpty() {
-        ArrayList<String> wordsList;
-        String osName = System.getProperty("os.name").toLowerCase();
-        if (osName.contains("win")) {
-            // Windows
-            wordsList = hangmanController.getWords("src\\test\\resources\\wordlist-test.txt");
-        } 
-        else {
-            // Linux
-            wordsList = hangmanController.getWords("src/test/resources/wordlist-test.txt");
-        }
+        ArrayList<String> wordsList = hangmanController.getWords("wordlist-test.txt");
         assertFalse(wordsList.isEmpty());
     }
 
@@ -64,16 +55,7 @@ public class HangmanJunitTest {
     @Test
     public void testWordLength() {
         hangmanController.setObject(hangmanView);
-        String osName = System.getProperty("os.name").toLowerCase();
-        ArrayList<String> wordsList;
-        if (osName.contains("win")) {
-            // Windows
-            wordsList = hangmanController.getWords("src\\test\\resources\\wordlist-test.txt");
-        } 
-        else {
-            // Linux
-            wordsList = hangmanController.getWords("src/test/resources/wordlist-test.txt");
-        }
+        ArrayList<String> wordsList = hangmanController.getWords("wordlist-test.txt");
         String word = hangmanController.getRandomWord(wordsList);
         assertNotNull(word);
         assertEquals(5, word.length());
