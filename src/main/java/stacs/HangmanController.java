@@ -1,7 +1,8 @@
 package stacs;
+import java.io.BufferedReader;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Random;
@@ -68,16 +69,8 @@ public class HangmanController {
     public void setGame() {
         // Setup hangman display
         hangmanView.setHangmanDisplay();
-        // Determine the operating system
-        String osName = System.getProperty("os.name").toLowerCase();
         ArrayList<String> wordsList;
-        if (osName.contains("win")) {
-            // Windows
-            wordsList = getWords("src\\main\\resources\\wordlist.txt");
-        } else {
-            // Linux or Unix-like
-            wordsList = getWords("src/main/resources/wordlist.txt");
-        }
+        wordsList = getWords("wordlist.txt");
          // Select a random word from the lists
         correctWord = getRandomWord(wordsList);
          // Initialize user life, lists, hidden word, and messages
@@ -112,8 +105,7 @@ public class HangmanController {
         if (!gameEnd()) {
             // Recursive call to continue the game
             startGame();
-
-        } 
+        }
         else {
             // Display the result of the game. If count is greater than or equal to 0 and the hidden word,
             hangmanView.displayHangman();
@@ -193,18 +185,18 @@ public class HangmanController {
      * @return True if the game has ended, false otherwise.
      */
     public boolean gameEnd() {
-            if (userLife > 0 && !Arrays.stream(hiddenWord.split("")).toList().contains("_")) {
-                System.out.println();
-                setUserMessage("\nYou won! :)");
-                playerScore +=5;
-                return true;
-            } 
-            else if (userLife == 0 && Arrays.stream(hiddenWord.split("")).toList().contains("_")){
-                System.out.println();
-                setUserMessage("\nYou lose!");
-                System.out.println("The correct word was: " + correctWord);
-                return true;
-            }
+        if (userLife > 0 && !Arrays.stream(hiddenWord.split("")).toList().contains("_")) {
+            System.out.println();
+            setUserMessage("\nYou won! :)");
+            playerScore +=5;
+            return true;
+        }
+        else if (userLife == 0 && Arrays.stream(hiddenWord.split("")).toList().contains("_")){
+            System.out.println();
+            setUserMessage("\nYou lose!");
+            System.out.println("The correct word was: " + correctWord);
+            return true;
+        }
         return false;
     }
 
@@ -254,7 +246,7 @@ public class HangmanController {
                 hangmanView.updateHangman(userLife);
                 wrongList.add(userInputChar);
             }
-        } 
+        }
         else {
             System.out.println("Please enter a valid letter [a-z]");
         }
@@ -281,13 +273,25 @@ public class HangmanController {
      * @return The list of words.
      */
     public ArrayList<String> getWords(String fileName) {
-        @SuppressWarnings({ "unchecked", "rawtypes" })
-        ArrayList<String> words = new ArrayList();
+        ArrayList<String> words = new ArrayList<>();
         try {
-            words = (ArrayList<String>) Files.readAllLines(Paths.get(fileName));
-        } catch (IOException ignored) {
+            // Use class loader to load the resource
+            InputStream inputStream = getClass().getClassLoader().getResourceAsStream(fileName);
+            if (inputStream != null) {
+                // Read lines from the input stream
+                try (BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream))) {
+                    String line;
+                    while ((line = reader.readLine()) != null) {
+                        words.add(line);
+                    }
+                }
+            } else {
+                System.out.println("File not found: " + fileName);
+            }
+        } catch (IOException e) {
+            System.out.println("Error reading file: " + e.getMessage());
         }
-        return(words);
+        return words;
     }
 
     /**

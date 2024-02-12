@@ -36,7 +36,7 @@ public class HangmanJunitTest {
      */
     @Test
     public void testWordsListNotNull() {
-        ArrayList<String> wordsList = hangmanController.getWords("src\\test\\resources\\wordlist-test.txt");
+        ArrayList<String> wordsList = hangmanController.getWords("wordlist-test.txt");
         assertNotNull(wordsList);
     }
 
