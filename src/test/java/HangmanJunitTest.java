@@ -36,8 +36,9 @@ public class HangmanJunitTest {
         if (osName.contains("win")) {
             // Windows
             wordsList = hangmanController.getWords("src\\test\\resources\\wordlist-test.txt");
-        } else {
-            // Assume Linux or Unix-like
+        } 
+        else {
+            // Linux
             wordsList = hangmanController.getWords("src/test/resources/wordlist-test.txt");
         }
         assertFalse(wordsList.isEmpty());
@@ -51,8 +52,9 @@ public class HangmanJunitTest {
         if (osName.contains("win")) {
             // Windows
             wordsList = hangmanController.getWords("src\\test\\resources\\wordlist-test.txt");
-        } else {
-            // Assume Linux or Unix-like
+        } 
+        else {
+            // Linux
             wordsList = hangmanController.getWords("src/test/resources/wordlist-test.txt");
         }
         String word = hangmanController.getRandomWord(wordsList);
@@ -131,6 +133,18 @@ public class HangmanJunitTest {
         // Assert
         assertFalse(gameEnded); // Expecting gameEnd to return false (game not ended)
         assertTrue(hangmanController.getUserMessage().isEmpty()); // User message should be null
+    }
+
+    @Test
+    public void testGetPlayerScore() {
+        // Arrange
+        int expectedScore = 6; // Set the expected score
+
+        // Act
+        int actualScore = hangmanController.getPlayerScore();
+
+        // Assert
+        assertEquals(expectedScore, actualScore); // Check if the actual score matches the expected score
     }
 
 }
